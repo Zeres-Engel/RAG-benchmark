@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
-from retrieval_augmented_generation.document_loaders import Document
+from retrieval_augmented_generation_v1.document_loaders import Document
 
 
 class EmbeddingModelType(Enum):

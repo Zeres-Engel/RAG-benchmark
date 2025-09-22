@@ -6,24 +6,25 @@ from typing import Dict, List, Optional, Union
 
 from qdrant_client.http.models import VectorParams
 
-from retrieval_augmented_generation.base_factory import (
+from retrieval_augmented_generation_v1.base_factory import (
     DocumentLoaderFactory,
     EmbeddingModelFactory,
     RerankingModelFactory,
     VectorStoreFactory,
 )
-from retrieval_augmented_generation.document_loaders import (
+from retrieval_augmented_generation_v1.document_loaders import (
     BaseDocumentLoader,
     Document,
     DocumentType,
     InputDocument,
     InputSource,
 )
-from retrieval_augmented_generation.embeddings import (
+from retrieval_augmented_generation_v1.embeddings import (
     BaseEmbeddingModel,
     EmbeddingConfig,
 )
-from retrieval_augmented_generation.vectorstores import Distance_Metric
+from retrieval_augmented_generation_v1.vectorstores import Distance_Metric
+from retrieval_augmented_generation_v1.document_loaders.semantic_splitter import SemanticTextSplitter
 
 
 class DocumentsManager:
@@ -68,6 +69,12 @@ class DocumentsManager:
             )
             self.logger.info(f"Initialized reranking model: {rerank_config.get('name')}")
         self.batch_size = config.get("batch_size", 32)
+        # Initialize semantic splitter for query processing
+        self.semantic_splitter = SemanticTextSplitter(
+            similarity_threshold=config.get("vector_store", {}).get("semantic_threshold", 0.7),
+            min_chunk_size=config.get("vector_store", {}).get("min_chunk_size", 100),
+            max_chunk_size=config.get("vector_store", {}).get("chunk_size", 1000)
+        )
 
     def _initialize_processors(self):
         """
@@ -378,3 +385,102 @@ class DocumentsManager:
         except Exception as e:
             self.logger.error(f"Failed to get collection info for {collection_name}: {e}")
             raise e
+
+    async def semantic_search_documents(
+        self,
+        collection_name: str,
+        query: str,
+        limit: int = 10,
+        score_threshold: float = 0.0,
+        filter_conditions: Optional[Dict] = None,
+        use_rerank: bool = False,
+        rerank_top_k: Optional[int] = None,
+    ) -> List[Dict]:
+        """
+        Semantic search with multi-step retrieval:
+        1. Break query into semantic parts
+        2. For each semantic part, find 3 similar chunks  
+        3. Aggregate and deduplicate results
+        """
+        try:
+            if not score_threshold:
+                score_threshold = self.config.get("default_score_threshold", 0.0)
+            model, _ = await self.get_embedding_model(collection_name)
+            
+            # Step 1: Break query into semantic parts - get unique semantic parts
+            query_parts = self.semantic_splitter.split_text(query)
+            if not query_parts:
+                query_parts = [query]
+            
+            # Remove duplicates while preserving order
+            unique_parts = []
+            seen_parts = set()
+            for part in query_parts:
+                part_clean = part.strip().lower()
+                if part_clean not in seen_parts:
+                    unique_parts.append(part)
+                    seen_parts.add(part_clean)
+            
+            # If we only have 1 unique part, use it as-is (get TOP 3 from this part)
+            # If we have multiple unique parts, use up to 3 of them
+            final_parts = unique_parts[:3]
+            
+            self.logger.info(f"Using {len(final_parts)} unique semantic parts: {[part[:30] + '...' if len(part) > 30 else part for part in final_parts]}")
+            
+            # Step 2: Search for each unique semantic part - collect results
+            all_results = []
+            
+            for i, query_part in enumerate(final_parts):
+                self.logger.debug(f"Searching for semantic part {i+1}: {query_part[:50]}...")
+                
+                # Generate query embedding for this part
+                tic = time.time()
+                query_embedding = await model.embed_text(query_part)
+                self.logger.debug(f"Generated embedding for part {i+1} in {time.time() - tic:.2f} seconds")
+                
+                # Search for this part (get 3 results per semantic part)
+                part_results = await self.vector_store_manager.search_documents(
+                    collection_name=collection_name,
+                    query_embedding=query_embedding,
+                    limit=3,  # 3 chunks per semantic part
+                    score_threshold=score_threshold,
+                    filter_conditions=filter_conditions,
+                )
+                
+                # Add ALL results from this part (allow duplicates across parts)
+                for result in part_results:
+                    result['semantic_part'] = i + 1
+                    result['semantic_query'] = query_part
+                    all_results.append(result)
+            
+            self.logger.info(f"Collected {len(all_results)} total chunks from {len(final_parts)} unique semantic parts")
+            
+            # Step 3: From 9 total chunks, select top-k best chunks based on score
+            all_results.sort(key=lambda x: x.get('score', 0), reverse=True)
+            selected_results = all_results[:limit]
+            
+            self.logger.info(f"Selected top-{limit} chunks from {len(all_results)} total chunks")
+            
+            if not selected_results:
+                self.logger.info(f"No results found in collection '{collection_name}'")
+                return []
+
+            # Step 4: Apply reranking if enabled to the selected results
+            if self.rerank_available and use_rerank:
+                self.logger.info("Reranking selected semantic search results")
+                tic = time.time()
+                final_results = await self.rerank_model.compress_documents(
+                    query=query, documents=selected_results, top_k=rerank_top_k, score_threshold=score_threshold
+                )
+                self.logger.info(f"Reranked semantic results in {time.time() - tic:.2f} seconds")
+            else:
+                if use_rerank and not self.rerank_available:
+                    self.logger.warning("Fallback to raw results, reranking not available")
+                final_results = [{"document": doc} for doc in selected_results]
+
+            self.logger.info(f"Returning {len(final_results)} semantic search results for {collection_name}")
+            return final_results
+
+        except Exception as e:
+            self.logger.error(f"Failed to perform semantic search in {collection_name}: {e}")
+            raise

@@ -1,8 +1,9 @@
 from langchain.schema import Document as LangChainDocument
 from langchain_community.document_loaders import TextLoader
 
-from retrieval_augmented_generation.base_factory import BaseDocumentLoader, DocumentLoaderFactory
-from retrieval_augmented_generation.document_loaders import Document, DocumentType, InputDocument, InputSource
+from retrieval_augmented_generation_v1.base_factory import BaseDocumentLoader, DocumentLoaderFactory
+from retrieval_augmented_generation_v1.document_loaders import Document, DocumentType, InputDocument, InputSource
+from retrieval_augmented_generation_v1.document_loaders.semantic_splitter import SemanticTextSplitter
 
 
 @DocumentLoaderFactory.register("text")
@@ -11,6 +12,12 @@ class TextProcessor(BaseDocumentLoader):
 
     def __init__(self, config, logger=None):
         super().__init__(config, logger)
+        # Use semantic splitter instead of recursive character splitter
+        self.semantic_splitter = SemanticTextSplitter(
+            similarity_threshold=config.get("vector_store", {}).get("semantic_threshold", 0.7),
+            min_chunk_size=config.get("vector_store", {}).get("min_chunk_size", 100),
+            max_chunk_size=config.get("vector_store", {}).get("chunk_size", 1000)
+        )
 
     def _accepts(self, document: InputDocument) -> bool:
         """Check if the document is a text document"""
@@ -35,7 +42,8 @@ class TextProcessor(BaseDocumentLoader):
                 loaded_text = content
             else:
                 raise ValueError(f"Unsupported source type: '{document.source}' for text processing")
-            processed_docs = await self.split_docs(raw_docs)
+            # Use semantic splitter instead of recursive character splitter
+            processed_docs = self.semantic_splitter.split_documents(raw_docs)
             docs = []
             for i, processed_doc in enumerate(processed_docs):
                 doc = Document(

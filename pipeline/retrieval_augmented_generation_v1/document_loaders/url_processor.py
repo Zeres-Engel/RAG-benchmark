@@ -1,7 +1,7 @@
 from langchain_community.document_loaders import WebBaseLoader
 
-from retrieval_augmented_generation.base_factory import BaseDocumentLoader, DocumentLoaderFactory
-from retrieval_augmented_generation.document_loaders import Document, DocumentType, InputDocument, InputSource
+from retrieval_augmented_generation_v1.base_factory import BaseDocumentLoader, DocumentLoaderFactory
+from retrieval_augmented_generation_v1.document_loaders import Document, DocumentType, InputDocument, InputSource
 
 
 @DocumentLoaderFactory.register("url")

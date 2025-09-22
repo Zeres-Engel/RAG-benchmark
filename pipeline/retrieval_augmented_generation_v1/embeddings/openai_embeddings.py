@@ -2,8 +2,8 @@ from typing import List
 
 from langchain_openai import OpenAIEmbeddings
 
-from retrieval_augmented_generation.base_factory import BaseEmbeddingModel, EmbeddingModelFactory
-from retrieval_augmented_generation.document_loaders import Document
+from retrieval_augmented_generation_v1.base_factory import BaseEmbeddingModel, EmbeddingModelFactory
+from retrieval_augmented_generation_v1.document_loaders import Document
 
 
 @EmbeddingModelFactory.register("openai")

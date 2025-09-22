@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-09-19T10:37:46.555879",
+  "comparison_summary": {
+    "fixed_chunking": {
+      "method": "Fixed Chunking",
+      "total_questions": 108,
+      "recall_1": 0.5092592592592593,
+      "recall_3": 0.7870370370370371,
+      "avg_hits_count": 1.2685185185185186,
+      "avg_score": 0.6810966605555556,
+      "min_score": 0.32127106,
+      "max_score": 0.9553757,
+      "top1_answer_included_rate": 0.23148148148148148,
+      "avg_top3_answer_count": 0.5,
+      "hallucination_rate": 0.06481481481481481
+    },
+    "semantic_chunking": {
+      "method": "Semantic Chunking",
+      "total_questions": 108,
+      "recall_1": 0.6203703703703703,
+      "recall_3": 0.8425925925925926,
+      "avg_hits_count": 0.9629629629629629,
+      "avg_score": 0.6631494024382716,
+      "min_score": 0.28845918,
+      "max_score": 1.0,
+      "top1_answer_included_rate": 0.3425925925925926,
+      "avg_top3_answer_count": 0.6296296296296297,
+      "hallucination_rate": 0.06481481481481481
+    }
+  },
+  "performance_differences": {
+    "recall_1_diff": 0.11111111111111105,
+    "recall_3_diff": 0.05555555555555547,
+    "score_diff": -0.017947258117284037,
+    "hallucination_diff": 0.0
+  }
+}

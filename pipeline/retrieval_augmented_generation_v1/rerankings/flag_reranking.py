@@ -1,6 +1,6 @@
 from FlagEmbedding import FlagReranker
 
-from retrieval_augmented_generation.base_factory import BaseRerankingModel, RerankingModelFactory
+from retrieval_augmented_generation_v1.base_factory import BaseRerankingModel, RerankingModelFactory
 
 
 @RerankingModelFactory.register("flag_reranker")

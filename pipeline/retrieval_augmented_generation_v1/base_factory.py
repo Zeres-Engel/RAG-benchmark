@@ -1,10 +1,10 @@
 from abc import ABC
 from typing import Dict, Generic, Type, TypeVar
 
-from retrieval_augmented_generation.document_loaders import BaseDocumentLoader
-from retrieval_augmented_generation.embeddings import BaseEmbeddingModel
-from retrieval_augmented_generation.rerankings import BaseRerankingModel
-from retrieval_augmented_generation.vectorstores import BaseVectorStore
+from retrieval_augmented_generation_v1.document_loaders import BaseDocumentLoader
+from retrieval_augmented_generation_v1.embeddings import BaseEmbeddingModel
+from retrieval_augmented_generation_v1.rerankings import BaseRerankingModel
+from retrieval_augmented_generation_v1.vectorstores import BaseVectorStore
 
 # Define a type variable for the base class that factories will create
 T = TypeVar("T")

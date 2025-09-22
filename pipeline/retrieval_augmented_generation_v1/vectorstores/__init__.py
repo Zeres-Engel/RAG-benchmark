@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Optional
 
 from qdrant_client.http.models import VectorParams
 
-from retrieval_augmented_generation.document_loaders import Document
+from retrieval_augmented_generation_v1.document_loaders import Document
 
 
 @dataclass

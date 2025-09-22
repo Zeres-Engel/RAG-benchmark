@@ -1,0 +1,248 @@
+{
+  "timestamp": "2025-09-19T10:29:39.582724",
+  "system_info": {
+    "ram_used_gb": 43.94,
+    "ram_percent": 40.0,
+    "vram_devices": [
+      {
+        "device_id": 0,
+        "vram_used_gb": 0.0,
+        "vram_total_gb": 44.4
+      }
+    ]
+  },
+  "strategies": {
+    "cpu_search": {
+      "strategy": "cpu_search",
+      "use_gpu": false,
+      "documents_processed": 104,
+      "loading": {
+        "time_seconds": 25.72,
+        "speed_docs_per_sec": 4.0,
+        "ram_delta_gb": 2.36,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 43.96,
+          "ram_percent": 40.0,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 46.32,
+          "ram_percent": 41.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "searching": {
+        "total_searches": 50,
+        "avg_time_seconds": 0.1902,
+        "min_time_seconds": 0.1319,
+        "max_time_seconds": 0.2705,
+        "total_time_seconds": 9.51,
+        "speed_searches_per_sec": 5.3,
+        "ram_delta_gb": 0.0,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 46.31,
+          "ram_percent": 41.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 46.31,
+          "ram_percent": 41.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "collection_info": {
+        "result": {
+          "status": "green",
+          "optimizer_status": "ok",
+          "indexed_vectors_count": 0,
+          "points_count": 105,
+          "segments_count": 8,
+          "config": {
+            "params": {
+              "vectors": {
+                "size": 1024,
+                "distance": "Cosine",
+                "on_disk": false
+              },
+              "shard_number": 1,
+              "replication_factor": 1,
+              "write_consistency_factor": 1,
+              "on_disk_payload": false
+            },
+            "hnsw_config": {
+              "m": 16,
+              "ef_construct": 100,
+              "full_scan_threshold": 10000,
+              "max_indexing_threads": 0,
+              "on_disk": false
+            },
+            "optimizer_config": {
+              "deleted_threshold": 0.2,
+              "vacuum_min_vector_number": 1000,
+              "default_segment_number": 0,
+              "max_segment_size": null,
+              "memmap_threshold": null,
+              "indexing_threshold": 10000,
+              "flush_interval_sec": 5,
+              "max_optimization_threads": null
+            },
+            "wal_config": {
+              "wal_capacity_mb": 32,
+              "wal_segments_ahead": 0,
+              "wal_retain_closed": 1
+            },
+            "quantization_config": null,
+            "strict_mode_config": {
+              "enabled": false
+            }
+          },
+          "payload_schema": {}
+        },
+        "status": "ok",
+        "time": 0.000213079
+      }
+    },
+    "gpu_search": {
+      "strategy": "gpu_search",
+      "use_gpu": true,
+      "documents_processed": 104,
+      "loading": {
+        "time_seconds": 26.19,
+        "speed_docs_per_sec": 4.0,
+        "ram_delta_gb": 2.39,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 46.33,
+          "ram_percent": 41.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 48.72,
+          "ram_percent": 43.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "searching": {
+        "total_searches": 50,
+        "avg_time_seconds": 0.1974,
+        "min_time_seconds": 0.128,
+        "max_time_seconds": 0.3096,
+        "total_time_seconds": 9.87,
+        "speed_searches_per_sec": 5.1,
+        "ram_delta_gb": 0.01,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 48.78,
+          "ram_percent": 43.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 48.79,
+          "ram_percent": 43.9,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "collection_info": {
+        "result": {
+          "status": "green",
+          "optimizer_status": "ok",
+          "indexed_vectors_count": 0,
+          "points_count": 105,
+          "segments_count": 8,
+          "config": {
+            "params": {
+              "vectors": {
+                "size": 1024,
+                "distance": "Cosine",
+                "on_disk": false
+              },
+              "shard_number": 1,
+              "replication_factor": 1,
+              "write_consistency_factor": 1,
+              "on_disk_payload": false
+            },
+            "hnsw_config": {
+              "m": 16,
+              "ef_construct": 100,
+              "full_scan_threshold": 10000,
+              "max_indexing_threads": 0,
+              "on_disk": false
+            },
+            "optimizer_config": {
+              "deleted_threshold": 0.2,
+              "vacuum_min_vector_number": 1000,
+              "default_segment_number": 0,
+              "max_segment_size": null,
+              "memmap_threshold": null,
+              "indexing_threshold": 10000,
+              "flush_interval_sec": 5,
+              "max_optimization_threads": null
+            },
+            "wal_config": {
+              "wal_capacity_mb": 32,
+              "wal_segments_ahead": 0,
+              "wal_retain_closed": 1
+            },
+            "quantization_config": null,
+            "strict_mode_config": {
+              "enabled": false
+            }
+          },
+          "payload_schema": {}
+        },
+        "status": "ok",
+        "time": 0.000186637
+      }
+    }
+  }
+}

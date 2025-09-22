@@ -1,0 +1,140 @@
+{
+  "timestamp": "2025-09-19T10:22:23.767538",
+  "system_info": {
+    "ram_used_gb": 40.51,
+    "ram_percent": 37.3,
+    "vram_devices": [
+      {
+        "device_id": 0,
+        "vram_used_gb": 0.0,
+        "vram_total_gb": 44.4
+      }
+    ]
+  },
+  "strategies": {
+    "on_disk": {
+      "strategy": "on_disk",
+      "on_disk": true,
+      "documents_processed": 104,
+      "loading": {
+        "time_seconds": 23.4,
+        "speed_docs_per_sec": 4.4,
+        "ram_delta_gb": 2.34,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 40.53,
+          "ram_percent": 37.3,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 42.87,
+          "ram_percent": 39.2,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "querying": {
+        "total_queries": 10,
+        "avg_time_seconds": 0.1606,
+        "speed_queries_per_sec": 6.2,
+        "ram_delta_gb": -0.02,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 42.87,
+          "ram_percent": 39.2,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 42.85,
+          "ram_percent": 39.1,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      }
+    },
+    "in_memory": {
+      "strategy": "in_memory",
+      "on_disk": false,
+      "documents_processed": 104,
+      "loading": {
+        "time_seconds": 25.64,
+        "speed_docs_per_sec": 4.1,
+        "ram_delta_gb": 2.4,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 43.02,
+          "ram_percent": 39.3,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 45.42,
+          "ram_percent": 41.2,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      },
+      "querying": {
+        "total_queries": 10,
+        "avg_time_seconds": 0.1745,
+        "speed_queries_per_sec": 5.7,
+        "ram_delta_gb": -0.21,
+        "vram_delta_gb": 0.0,
+        "memory_before": {
+          "ram_used_gb": 45.42,
+          "ram_percent": 41.2,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        },
+        "memory_after": {
+          "ram_used_gb": 45.21,
+          "ram_percent": 41.1,
+          "vram_devices": [
+            {
+              "device_id": 0,
+              "vram_used_gb": 0.0,
+              "vram_total_gb": 44.4
+            }
+          ]
+        }
+      }
+    }
+  }
+}

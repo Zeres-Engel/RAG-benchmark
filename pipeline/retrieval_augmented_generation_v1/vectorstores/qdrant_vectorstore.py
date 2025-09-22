@@ -6,9 +6,9 @@ from qdrant_client import AsyncQdrantClient, QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import PointStruct, VectorParams
 
-from retrieval_augmented_generation.base_factory import VectorStoreFactory
-from retrieval_augmented_generation.document_loaders import Document
-from retrieval_augmented_generation.vectorstores import BaseVectorStore
+from retrieval_augmented_generation_v1.base_factory import VectorStoreFactory
+from retrieval_augmented_generation_v1.document_loaders import Document
+from retrieval_augmented_generation_v1.vectorstores import BaseVectorStore
 
 
 @VectorStoreFactory.register("qdrant")
