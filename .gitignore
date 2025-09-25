@@ -1,3 +1,5 @@
 *.pyc
 *.pdf
-*cursor/*
+*cursor/*.vscode
+__pycache__
+.DS_Store
