@@ -36,12 +36,17 @@ class SimpleRAGSystem:
             self.logger.info(f"🔍 Retrieving documents for query: {query}")
             search_start = time.time()
             
+            # Respect reranking settings from the document manager's config
+            rerank_enabled = bool(getattr(self.document_manager, 'rerank_available', False))
+            rerank_cfg = getattr(self.document_manager, 'config', {}).get('reranking', {}) if hasattr(self.document_manager, 'config') else {}
+            rerank_top_k = rerank_cfg.get('top_k', None)
+
             retrieved_docs = await self.document_manager.search_documents(
                 collection_name=collection_name,
                 query=query,
                 limit=limit,
-                use_rerank=True,
-                rerank_top_k=3
+                use_rerank=rerank_enabled,
+                rerank_top_k=rerank_top_k
             )
             
             search_time = time.time() - search_start

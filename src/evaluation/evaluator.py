@@ -17,6 +17,11 @@ import retrieval_augmented_generation.embeddings.sentence_transformer_embeddings
 import retrieval_augmented_generation.document_loaders.text_processor  # noqa: F401
 import retrieval_augmented_generation.document_loaders.pdf_processor  # noqa: F401
 import retrieval_augmented_generation.document_loaders.url_processor  # noqa: F401
+import retrieval_augmented_generation.rerankings.cross_encoder_reranking  # noqa: F401
+try:
+    import retrieval_augmented_generation.rerankings.flag_reranking  # noqa: F401
+except Exception:
+    pass
 
 
 class Evaluator:
@@ -86,11 +91,16 @@ class Evaluator:
                 continue
             total += 1
 
+            rerank_enabled = bool(self.config.get('enable_reranking', False))
+            # Ensure top_k is applied AFTER reranking
+            rerank_top_k = int(top_k) if rerank_enabled else None
+
             results = await self.doc_manager.search_documents(
                 collection_name=collection,
                 query=question,
                 limit=top_k,
-                use_rerank=False
+                use_rerank=rerank_enabled,
+                rerank_top_k=rerank_top_k
             )
 
             # Build per-rank entries

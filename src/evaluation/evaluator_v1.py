@@ -95,11 +95,16 @@ class EvaluatorV1:
             total += 1
 
             # Use semantic search instead of regular search
+            rerank_enabled = bool(self.config.get('enable_reranking', False))
+            # Ensure top_k is applied AFTER reranking for semantic search as well
+            rerank_top_k = int(top_k) if rerank_enabled else None
+
             results = await self.doc_manager.semantic_search_documents(
                 collection_name=collection,
                 query=question,
                 limit=top_k,
-                use_rerank=False
+                use_rerank=rerank_enabled,
+                rerank_top_k=rerank_top_k
             )
 
             # Build per-rank entries with semantic information
