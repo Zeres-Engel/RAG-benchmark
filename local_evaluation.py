@@ -15,7 +15,6 @@ from openai import APIConnectionError, OpenAI, RateLimitError
 from prompts.templates import IN_CONTEXT_EXAMPLES, INSTRUCTIONS
 from tqdm.auto import tqdm
 from transformers import LlamaTokenizerFast
-from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 tokenizer = LlamaTokenizerFast.from_pretrained("tokenizer")
 
@@ -211,6 +210,7 @@ def evaluate_predictions(queries, ground_truths_list, predictions, evaluation_mo
             # trim prediction to 75 tokens using Llama2 tokenizer
             prediction = trim_predictions_to_max_token_length(prediction)
             prediction = prediction.strip()
+            prediction_lowercase = prediction.lower()
 
             if "i don't know" in prediction_lowercase:
                 n_miss += 1
