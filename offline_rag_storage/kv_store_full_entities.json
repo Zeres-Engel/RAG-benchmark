@@ -1,0 +1,43 @@
+{
+  "doc-25bdedfba92a9a8adc3e77982f1ff724": {
+    "entity_names": [
+      "Retrieval-Augmented Generation",
+      "OpenAI",
+      "knowledge graph",
+      "Hugging Face",
+      "LightRAG",
+      "Ollama",
+      "PostgreSQL"
+    ],
+    "count": 7,
+    "create_time": 1758789062,
+    "update_time": 1758789062,
+    "_id": "doc-25bdedfba92a9a8adc3e77982f1ff724"
+  },
+  "doc-0588697e22866d45d52a5d33227b1e8c": {
+    "entity_names": [
+      "tokens",
+      "LLM",
+      "LightRAG",
+      "Knowledge Graph"
+    ],
+    "count": 4,
+    "create_time": 1758789062,
+    "update_time": 1758789062,
+    "_id": "doc-0588697e22866d45d52a5d33227b1e8c"
+  },
+  "doc-b1a91ce3705c9370f88ef6024fdf1286": {
+    "entity_names": [
+      "nomic-embed-text",
+      "gemma2",
+      "context size",
+      "chunk size",
+      "overlap",
+      "Ollama"
+    ],
+    "count": 6,
+    "create_time": 1758789067,
+    "update_time": 1758789067,
+    "_id": "doc-b1a91ce3705c9370f88ef6024fdf1286"
+  }
+}
