@@ -6,7 +6,7 @@ embedding_models:
     type: huggingface # openai
     device: cuda
 
-enable_reranking: false
+enable_reranking: true
 reranking:
   top_k: 4
   type: qwen_cross_encoder # Options: flag_reranker, cross_encoder, qwen_cross_encoder

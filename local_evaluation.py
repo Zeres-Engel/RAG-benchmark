@@ -196,7 +196,7 @@ def evaluate_predictions(queries, ground_truths_list, predictions, evaluation_mo
     dict: A dictionary containing evaluation results.
     """
 
-    if "chat" in evaluation_model_name.lower():
+    if evaluation_model_name.lower() in {"openai", "chat", "gpt"} or "chat" in evaluation_model_name.lower():
         # now we are using chatgpt
         openai_client = OpenAI()
         n_miss, n_correct = 0, 0
@@ -269,9 +269,15 @@ def evaluate_predictions(queries, ground_truths_list, predictions, evaluation_mo
         }
         logger.info(results)
         return results
+    elif evaluation_model_name.lower() in {"gemini", "google"}:
+        from evaluators.gemini_eval import GeminiEvaluator
+        evaluator = GeminiEvaluator()
+        return evaluator.evaluate(queries, ground_truths_list, predictions)
+    elif evaluation_model_name.lower() in {"exact", "offline", "em", "anls"}:
+        from evaluators.offline_eval import OfflineEvaluator
+        evaluator = OfflineEvaluator(use_anls=True)
+        return evaluator.evaluate(queries, ground_truths_list, predictions)
     elif "llama" in evaluation_model_name.lower():
-        # now we are using llama model to evaluate
-        # to be filled by Jiaqi
         raise NotImplementedError("Llama evaluation model is not implemented yet.")
     else:
         raise NotImplementedError(f"Unknown evaluation model: {evaluation_model_name}")
@@ -287,7 +293,10 @@ if __name__ == "__main__":
     participant_model = UserModel()
     queries, ground_truths, predictions = generate_predictions(DATASET_PATH, participant_model)
     # Evaluate Predictions
-    openai_client = OpenAI()
     evaluation_results = evaluate_predictions(
-        queries, ground_truths, predictions, EVALUATION_MODEL_NAME, openai_client
+        queries, ground_truths, predictions, EVALUATION_MODEL_NAME
     )
+    try:
+        print(json.dumps(evaluation_results, ensure_ascii=False, indent=2))
+    except Exception:
+        print(evaluation_results)

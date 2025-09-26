@@ -52,8 +52,8 @@ class DummyModel:
                 - 'query_time' (List[str]): List of timestamps (represented as a string), each corresponding to when a query was made.
 
         Returns:
-            List[str]: A list of plain text responses for each query in the batch. Each response is limited to 75 tokens.
-            If the generated response exceeds 75 tokens, it will be truncated to fit within this limit.
+            List[str]: A list of plain text responses ery in the batch. Each response is limited to 75 tokens.
+            If the generated response exceeds 75 tokens, it will be truncated to fit within this limit.for each qu
 
         Notes:
         - If the correct answer is uncertain, it's preferable to respond with "I don't know" to avoid
